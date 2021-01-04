@@ -1,0 +1,39 @@
+<% custom_header = "" if local_assigns[:custom_header].nil? %>
+<header>
+    <nav>
+        <div class="nav-logo">
+            <%= image_tag "logos/hacker-news-30.png", size: "28x28" %>
+            <div class="nav-items">
+                <h1>Hacker News</h1>
+                <ul>
+                    <% if current_user %>
+                        <li><%= link_to "welcome", "/newswelcome.html" %>&nbsp;|</li>
+                    <% end %>
+                    <li><%= link_to "new", newest_path %>&nbsp;|</li>
+                    <% if current_user %>
+                        <li><%= link_to "threads", threads_path %>&nbsp;|</li>
+                    <% end %>
+                    <li><%= link_to "past", past_path %>&nbsp;|</li>
+                    <li><%= link_to "comments", newcomments_path %>&nbsp;|</li>
+                    <li><%= link_to "ask", ask_path %>&nbsp;|</li>
+                    <li><%= link_to "show", show_path %>&nbsp;|</li>
+                    <li><%= link_to "submit", submit_path %></li>
+                    <% if !custom_header.empty? %>
+                        <li>|&nbsp;<p class="custom-header"><%= custom_header %><p></li>
+                    <% end %>
+                </ul>
+            </div>
+        </div>
+        <div class="auth-items">
+            <ul>
+                <% if current_user %>
+                  <li><%= link_to "#{current_user.username}(#{current_user.karma})", user_path(:id => current_user.username) %>&nbsp;|</li>
+                  <li><%= link_to "logout", destroy_user_session_path, method: :delete %></li>
+                <% else %>
+                    <li><%= link_to "login", new_user_session_path %>&nbsp;|</li>
+                    <li><%= link_to "sign up", new_user_registration_path %></li>
+                <% end %>
+            </ul>
+        </div>
+    </nav>
+</header>

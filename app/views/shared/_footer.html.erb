@@ -1,0 +1,22 @@
+<hr>
+<footer>
+    <div class="footer-links">
+        <%= link_to "Guidelines", "/newsguidelines.html" %> |
+        <%= link_to "FAQ", "/newsfaq.html" %> |
+        <%= link_to "Lists", "#" %> |
+        <%= link_to "API", "https://github.com/HackerNews/API" %> |
+        <%= link_to "Security", "/security.html" %> |
+        <%= link_to "Legal", "http://www.ycombinator.com/legal/" %> |
+        <%= link_to "Apply to YC", "http://www.ycombinator.com/apply/" %> |
+        <%= link_to "Contact", "mailto:hn@ycombinator.com" %>
+    </div>
+    <div class="search">
+        <%= form_with url: search_url, method: :get do |f| %>
+            <%= f.label "Search" %>
+            <%= f.text_field :query %>
+            <%= f.hidden_field :type, value: "all" %>
+            <%= f.hidden_field :dateRange, value: "all" %>
+            <%= f.hidden_field :sort, value: "byPopularity" %>
+        <% end %>
+    </div>
+</footer>

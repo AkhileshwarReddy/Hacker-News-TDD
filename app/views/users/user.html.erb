@@ -1,0 +1,101 @@
+<div class="profile-form">
+        <%= form_with model: @user do |f| %>
+            <div>
+                <label>user:</label>
+                <p><%= @user.username %></p>
+            </div>
+            <div>
+                <label>created:</label>
+                <p><%= time_ago_in_words(@user.created_at) %> ago</p>
+            </div>
+            <div>
+                <label>karma:</label>
+                <p><%= @user.karma %></p>
+            </div>
+
+            <div>
+                <p><%= f.label :about %>:</p>
+                <% if user_signed_in? and @user.id == current_user.id %>
+                    <p><%= f.text_area :about, size: "60x5" %></p>
+                <% else %>
+                    <p><%= @user.about %></p>
+                <% end %>
+            </div>
+            
+            <% if user_signed_in? and @user.id == current_user.id %>
+                <div>
+                    <p><%= f.label :email %>:</p>
+                    <p><%= f.email_field :email %></p>
+                </div>
+
+                <div>
+                    <p><%= f.label :showdead %>:</p>
+                    <p><%= f.select :showdead, [["yes", true], ["no", false]] %>
+                </div>
+
+                <div>
+                    <p><%= f.label :noprocrast %>:</p>
+                    <p><%= f.select :noprocrast, [["yes", true], ["no", false]] %>
+                </div>
+
+                <div>
+                    <p><%= f.label :max_visit %>:</p>
+                    <p><%= f.number_field :max_visit %></p>
+                </div>
+
+                <div>
+                    <p><%= f.label :minaway %>:</p>
+                    <p><%= f.number_field :minaway %></p>
+                </div>
+
+                <div>
+                    <p><%= f.label :delay %>:</p>
+                    <p><%= f.number_field :delay %></p>
+                </div>
+
+                <div>
+                    <div></div>
+                    <%= link_to "change password", edit_user_password_path %>
+                </div>
+            <% end %>
+            
+            <div>
+                <div></div>
+                <%= link_to "submissions", submitted_path(:id => @user.username) %>
+            </div>
+            
+            <div>
+                <div></div>
+                <%= link_to "comments", "#" %>
+            </div>
+
+            
+            
+            <% if user_signed_in? and @user.id == current_user.id %>
+            
+                <div>
+                    <div></div>
+                    <%= link_to "hidden", hidden_path %>
+                </div>
+
+                <div>
+                    <div></div>
+                    <p><%= link_to "upvoted submissions", upvoted_path(:id => current_user.username) %> / <%= link_to "comments", upvoted_path(:comment => "t") %> <em>(private)</em></p>
+                </div>
+                
+                <div>
+                    <div></div>
+                    <p><%= link_to "favorite submissions", favorites_path(:id => @user.username) %> / <%= link_to "comments", favorites_path(:id => @user.username, :comment => "t") %> <em>(shared)</em></p>
+                </div>
+
+                <div>
+                    <%= f.submit "update" %>
+                </div>
+            <% else %>
+                <div>
+                    <div></div>
+                    <p><%= link_to "favorites", favorites_path(:id => @user.username) %>
+                </div>
+            <% end %>
+        <% end %>
+    </div>
