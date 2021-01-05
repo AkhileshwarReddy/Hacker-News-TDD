@@ -1,0 +1,20 @@
+<%= render "shared/header" %>
+<div class="past-submission-options">
+    <p>Stories from <%= @date.strftime("%B %d, %Y") %> (UTC)</p>
+    <p>Go back a 
+        <%= link_to "day", past_path(:day => (@date - 1.day).strftime("%Y-%m-%d")) %>,
+        <%= link_to "month", past_path(:day => (@date - 1.month).strftime("%Y-%m-%d")) %>,
+        <%= link_to "year", past_path(:day => (@date - 1.year).strftime("%Y-%m-%d")) %>.
+        Go forward a 
+        <%= link_to "day", past_path(:day => (@date + 1.day).strftime("%Y-%m-%d")) %>
+    </p>
+</div>
+<div class="submissions">
+    <% @submissions.each_with_index do |submission, index| %>
+        <div class="submission-partial">
+            <p class="submission-index"><%= index + 1 %>.</p>
+            <%= render partial: "shared/submission", locals: {submission: submission} %>
+        </div>
+    <% end %>
+</div>
+<%= render "shared/footer" %>

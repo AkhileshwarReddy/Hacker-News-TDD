@@ -1,0 +1,26 @@
+<%= render "shared/header" %>
+    <div class="submissions">
+        
+        <% if @no_such_item %>
+            <p>No such item</p>
+        <% else %>
+            <%= render partial: "shared/submission", locals: {submission: @submission} %>
+        <% end %>
+        
+        <p class="submission-text"><%= @submission.text %></p>
+
+    </div>
+    <div class="comment-form">
+        <%= form_with model: @comment, url: comment_create_url(:id => @submission.id, :is_comment => false) do |f|  %>
+            <%= f.text_area :content, size: "65x7" %>
+            <%= f.submit "add comment" %>
+        <% end %>
+    </div>
+    <% if @comments %>
+        <div class="comments-container">
+            <% @comments.each do |comment| %>
+                <%= render partial: "shared/comment", locals: {comment: comment, is_nested: true} %>
+            <% end %>
+        </div>
+    <% end %>
+<%= render "shared/footer" %>

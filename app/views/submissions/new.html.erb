@@ -1,0 +1,33 @@
+<%= render partial: "shared/title-header", locals: {header_title: "Submit"} %>
+<div class="submission-form">
+    <%= form_with model: @submission, url: submissions_create_url do |f| %>
+        <div>
+            <%= f.label :title %>
+            <%= f.text_field :title %>
+        </div>
+
+        <div>
+            <%= f.label :url %>
+            <%= f.url_field :url %>
+        </div>
+
+        <div>
+            <div></div>
+            <h4>or</h4>
+        </div>
+
+        <div>
+            <%= f.label :text %>
+            <%= f.text_area :text, size: "40x5" %>
+        </div>
+
+        <div>
+            <div></div>
+            <%= f.submit "submit" %>
+        </div>         
+    <% end %>
+    <div class="submit-info">
+        <p>Leave url blank to submit a question for discussion. If there is no url, the text (if any) will appear at the top of the thread.</p>
+        <p>You can also submit via <a>bookmarklet</a>.</p>
+    </div>
+</div>

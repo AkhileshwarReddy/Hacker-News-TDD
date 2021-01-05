@@ -1,0 +1,52 @@
+<% is_nested = false if local_assigns[:is_nested].nil? %>
+<div class="comment-container">
+    <% if !request.url.start_with?(search_url) %>
+        <% if user_signed_in? %>
+            <% if comment.user.id == current_user.id %>
+                <p class="current-user-item">*</p>
+            <% elsif !current_user.upvoted_comments.include?(comment.id) %>
+                <%= link_to vote_path(:id => comment.id, :how => "up", :comment => "t") do %>
+                    <box-icon type='solid' color=  'gray' name='up-arrow'></box-icon>
+                <% end %>
+            <% else %>
+                <p>&nbsp;&nbsp;</p>
+            <% end %>
+        <% else %>
+                <%= link_to vote_path(:id => comment.id, :how => "up", :comment => "t") do %>
+                    <box-icon type='solid' color=  'gray' name='up-arrow'></box-icon>
+                <% end %>
+        <% end %>
+    <% end %>
+    <div class="comment">
+        <p class="comment-details">
+            <% if request.url.start_with?(threads_url) %>
+                <span><%= comment.upvotes %> <%= comment.upvotes == 1 ? "point" : "points" %> by</span>
+            <% end %>
+            <%= link_to comment.user.username, user_path(:id => comment.user.username) %> 
+            <%= link_to "#{time_ago_in_words(comment.created_at)} ago", comment_path(:id => comment.id) %> | 
+            <%= link_to "parent", comment.parent_comment_id.nil? ? item_path(:id => comment.submission.id) : comment_path(:id => comment.id) %> | 
+            <% if request.url.start_with?(item_url) or request.url.start_with?(comment_url) %>
+                <% if user_signed_in? and current_user.upvoted_comments.include?(comment.id) %>
+                    <%= link_to "unvote", vote_path(:id => comment.id, :comment => "t", :how => "un") %> |
+                <% end %>
+            <% end %>
+            <% if request.url.start_with?(item_url) or request.url.start_with?(comment_url) %>
+                <% if user_signed_in? and current_user.favorite_comments.include?(comment.id) %>
+                    <%= link_to "unfavorite", fave_path(:id => comment.id, :comment => "t", :how => "un") %> |
+                <% else %>
+                    <%= link_to "favorite", fave_path(:id => comment.id, :comment => "t") %> |
+                <% end %>
+            <% end %>
+            <span>on:<span> <%= link_to comment.submission.title, item_path(:id => comment.submission.id) %>
+        </p>
+        <p><%= comment.content %></p>
+        <% if is_nested %>
+            <%= link_to "reply", comment_path(:id => comment.id), class: "text-underline" %>
+            <% if Comment.exists?(parent_comment_id: comment.id) %>
+                <% Comment.where(parent_comment_id: comment.id).each do |child_comment| %>
+                    <%= render partial: "shared/comment", locals: {:comment => child_comment, :is_nested => is_nested} %>
+                <% end %>
+            <% end %>
+        <% end %>
+    </div>
+</div>

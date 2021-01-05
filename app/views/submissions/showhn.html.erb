@@ -1,0 +1,11 @@
+<%= render "shared/header" %>
+<div class="submissions">
+    <p class="showhn-info">Please read the <%= link_to "rules", "/showhn.html" %>. You can also browse the <%= link_to "newest", shownew_path %> Show HNs.
+    <% @submissions.each_with_index do |submission, index| %>
+        <div class="submission-partial">
+            <p class="submission-index"><%= index + 1 %>.</p>
+            <%= render partial: "shared/submission", locals: {submission: submission} %>
+        </div>
+    <% end %>
+</div>
+<%= render "shared/footer" %>

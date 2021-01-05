@@ -1,0 +1,58 @@
+<div class="submission">
+    <% if !request.url.start_with?(search_url) %>
+        <% if user_signed_in? %>
+            <% if submission.user.id == current_user.id %>
+                <p class="current-user-item">*</p>
+            <% elsif !current_user.upvoted_submissions.include?(submission.id) %>
+                <%= link_to vote_path(:id => submission.id, :how => "up") do %>
+                    <box-icon type='solid' color=  'gray' name='up-arrow'></box-icon>
+                <% end %>
+            <% else %>
+                <p>&nbsp;&nbsp;</p>
+            <% end %>
+        <% else %>
+                <%= link_to vote_path(:id => submission.id, :how => "up") do %>
+                    <box-icon type='solid' color=  'gray' name='up-arrow'></box-icon>
+                <% end %>
+        <% end %>
+    <% end %>
+    <div class="submission-container">
+        <% unless submission.url == nil or submission.url == "" %>
+            <p class="submission-title"><%= link_to submission.title, submission.url, target: "_blank" %>
+            <span class="submission-url">(<%= link_to get_host(submission.url), submission.url %>)</span></p>
+        <% else %>
+            <p class="submission-title"><%= link_to submission.title, item_path(:id => submission.id) %></p>
+        <% end %>
+        <div class="submission-ops">
+            <p>
+                <%= "#{submission.upvotes} #{submission.upvotes > 1 ? "points" : "point"} by" %>
+                <%= link_to submission.user.username, user_path(:id => submission.user.username) %>
+                <%= link_to "#{time_ago_in_words(submission.created_at)} ago", item_path(:id => submission.id) %> |
+
+                <% if user_signed_in? and current_user.upvoted_submissions.include?(submission.id) %>
+                    <%= link_to "unvote", vote_path(:id => submission.id) %> |
+                <% end %>
+                
+                <% if user_signed_in? and current_user.hidden_submissions.include?(submission.id) %>
+                    <%= link_to "un-hide", hide_path(:id => submission.id, :how => "un") %> |
+                <% else %>
+                    <%= link_to "hide", hide_path(:id => submission.id) %> |
+                <% end %>
+
+                <%= link_to "past", "#" %> |
+
+                <% if user_signed_in? and current_user.favorite_submissions.include?(submission.id) %>
+                    <%= link_to "unfavorite", fave_path(:id => submission.id, :how => "un") %> |
+                <% else %>
+                    <%= link_to "favourite", fave_path(:id => submission.id) %> |
+                <% end %>
+
+                <% if submission.comments.count == 0 %>
+                    <%= link_to "discuss", item_path(:id => submission.id) %>
+                <% else %>
+                    <%= link_to "#{submission.comments.count} #{submission.comments.count > 1 ? "comments" : "comment"}", item_path(:id => submission.id) %>
+                <%end%>
+            </p> 
+        </div>
+    </div>
+</div>

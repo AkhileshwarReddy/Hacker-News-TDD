@@ -1,0 +1,15 @@
+<% if @no_such_user %>
+    <%= render "shared/header" %>
+  <p>No such user.</p>
+<% else %>
+    <%= render partial: "shared/header", locals: {custom_header: "#{@user.username}'s submissions"} %>
+    <div class="submissions">
+        <% @submissions.each_with_index do |submission, index| %>
+            <div class="submission-partial">
+                <p class="submission-index"><%= index + 1 %>.</p>
+                <%= render partial: "shared/submission", locals: {submission: submission} %>
+            </div>
+        <% end %>
+    </div>
+<% end %>
+<%= render "shared/footer" %>
