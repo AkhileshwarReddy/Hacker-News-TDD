@@ -19,5 +19,17 @@ Rails.application.routes.draw do
   get "/submitted", to: "submissions#submitted"
   get "/past", to: "submissions#past"
 
-  
+  post "/comment/create", to: "comments#create"
+  get "/newcomments", to: "comments#new_comments"
+  get "/comment", to: "comments#show"
+  post "/reply", to: "comments#reply"
+  get "/threads", to: "comments#threads"
+
+  get "/fave", to: "favorites#index"
+  get "/favorites", to: "favorites#favorites"
+
+  get "/vote", to: "votes#vote"
+  get "/upvoted", to: "votes#upvoted"
+
+  get "/search", to: "search#search"
 end

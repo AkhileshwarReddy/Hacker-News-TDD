@@ -1,3 +1,147 @@
-// Place all the styles related to the submissions controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: https://sass-lang.com/
+.submission-form {
+    padding: 1rem;
+    color: gray;
+}
+
+.submission-form form {
+    display: flex;
+    flex-direction: column;
+}
+
+.submission-form form label {
+    text-transform: lowercase;
+    margin: 0 .5rem;
+}
+
+.submission-form form input {
+    padding: 2px;
+}
+
+.submission-form form div {
+    display: grid;
+    grid-template-columns: 50px 450px;
+    margin-top: .3rem;
+}
+
+.submission-form form input[type="submit"] {
+    width: 20%;
+}
+
+.submit-info {
+    margin: 1rem 50px;
+    display: flex;
+    flex-direction: column;
+}
+
+.submit-info p {
+    margin-top: .5rem;
+    font-size: .9rem;
+}
+
+// Submission partial
+
+.submission-title, .submission-text {
+    font-size: .9rem;
+}
+
+.submission-text {
+    color: gray;
+    padding: .7rem;
+}
+
+.submission-url, .submission-url a {
+    font-size: .8rem;
+    color: gray;
+}
+
+box-icon {
+    height: 20px;
+    width: 10px;
+    
+}
+
+.submissions {
+    margin: 1rem .5rem;
+}
+
+.submission {
+    display: flex;
+    align-items: flex-start;
+    margin: .2rem .1rem;
+}
+
+.submission-container {
+    display: flex;
+    flex-direction: column;
+    margin: 0 .2rem;
+}
+
+.submission-ops {
+    margin: .1rem 0;
+    display: flex;
+    font-size: .6rem;
+    letter-spacing: .05ch;
+    margin-top: .2rem;
+}
+
+.submission-ops p, .submission-ops a {
+    color: gray;
+}
+
+.submission-ops a:hover, .submission-url a:hover {
+    text-decoration: underline;
+}
+
+.submission-partial {
+    display: flex;
+    margin: 0 .5rem;
+    padding: 0;
+}
+
+.submission-index {
+    color: gray;
+    font-size: .9rem;
+    margin-top: .2rem;
+}
+
+.current-user-item {
+    color: red;
+    opacity: .6;
+}
+
+.comment-form {
+    margin: 1rem;
+}
+
+.comment-form form {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}
+
+.comment-form input[type="submit"] {
+    margin: .5rem 0;
+    padding: 2px;
+    width: 20%;
+}
+
+.showhn-info {
+    margin: .7rem;
+    font-size: .9rem;
+    color: gray;
+}
+
+.showhn-info a {
+    color: gray;
+    text-decoration: underline;
+}
+
+.past-submission-options {
+    margin: 1rem;
+    font-size: .9rem;
+    line-height: 1.5rem;
+}
+
+.past-submission-options a {
+    text-decoration: underline;
+}

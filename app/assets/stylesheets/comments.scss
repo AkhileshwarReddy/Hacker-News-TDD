@@ -1,0 +1,43 @@
+// Place all the styles related to the comments controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+
+.comment-container {
+    margin: 1rem;
+    display: flex;
+}
+
+.comment {
+    display: flex;
+    flex-direction: column;
+    margin: auto .2rem;
+}
+
+.comment p {
+    font-size: .9rem;
+    line-height: 1.3rem;
+}
+
+.comment-details {
+    color: gray;
+    line-height: 1.2rem;
+    letter-spacing: .02ch;
+}
+
+.comment-details span {
+    font-size: .8rem;
+}
+
+.comment-details a {
+    color: gray;
+    font-size: .7rem;
+}
+
+.comment-container a {
+    font-size: .7rem;
+    letter-spacing: .05ch;
+}
+
+.text-underline {
+    text-decoration: underline;
+}

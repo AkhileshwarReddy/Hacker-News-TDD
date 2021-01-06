@@ -1,6 +1,6 @@
 class SubmissionsController < ApplicationController
     before_action :authenticate_user!, only: [:new, :create, :hidden_submissions, :threads]
-    before_Action :set_submission, only: [:hide]
+    before_action :set_submission, only: [:hide]
 
     def new
         @submission = Submission.new
@@ -33,7 +33,7 @@ class SubmissionsController < ApplicationController
 
     def newest
         if user_signed_in?
-          @submissions = Submission.newest.where.not(id: current_user.hidden_submissions)
+          @submissions = Submission.newest.where.not(id: HiddenSubmission.submission_ids(current_user))
         else
           @submissions = Submission.newest
         end
@@ -55,14 +55,17 @@ class SubmissionsController < ApplicationController
     
     def hide
       if params[:how] == "un"
-        current_user.hidden_submissions.delete(@submission.id)
+        HiddenSubmission.delete_by(submission: @submission, user: current_user)
       else
-        current_user.hidden_submissions.push(@submission.id)
+        hidden_submission = HiddenSubmission.new(submission: @submission, user: current_user)
+        if !hidden_submission.save
+          falsh[:alert] = "Something went wrong"
+        end
       end
   
-      if current_user.save
+      # if current_user.save
         redirect_to params[:how] == "un" ? hidden_path : newest_path
-      end
+      # end
     end
     
     def news
@@ -71,8 +74,9 @@ class SubmissionsController < ApplicationController
     
     def hidden
       @no_such_items = false
-      if current_user.hidden_submissions.count > 0
-        @submissions = Submission.where(id: current_user.hidden_submissions)
+      @submissions = []
+      if HiddenSubmission.where(user: current_user).count > 0
+        @submissions = HiddenSubmission.where(user: current_user).map {|x| x.submission} # Submission.where(id: current_user.hidden_submissions)
       else
         @no_such_item = true
       end

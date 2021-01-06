@@ -1,0 +1,2 @@
+class UpvotedSubmission < Upvoted
+end

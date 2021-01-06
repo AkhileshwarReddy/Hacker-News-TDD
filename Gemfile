@@ -51,7 +51,11 @@ group :development do
   gem 'spring'
   # Pry-rails for debugging
   gem 'pry-rails'
+end
 
+group :test do
+  gem 'database_cleaner-active_record'
+  gem 'simplecov'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

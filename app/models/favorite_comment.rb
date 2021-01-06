@@ -1,0 +1,2 @@
+class FavoriteComment < Favorite
+end

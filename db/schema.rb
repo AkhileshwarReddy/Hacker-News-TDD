@@ -10,11 +10,43 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_04_165203) do
+ActiveRecord::Schema.define(version: 2021_01_06_070935) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+
+  create_table "comments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "parent_comment_id"
+    t.text "content"
+    t.integer "upvotes"
+    t.boolean "is_flagged", default: false
+    t.string "level", default: "0"
+    t.uuid "user_id", null: false
+    t.uuid "submission_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["submission_id"], name: "index_comments_on_submission_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "favorites", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id", null: false
+    t.string "type"
+    t.uuid "item_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_favorites_on_user_id"
+  end
+
+  create_table "hidden_submissions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id", null: false
+    t.uuid "submission_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["submission_id"], name: "index_hidden_submissions_on_submission_id"
+    t.index ["user_id"], name: "index_hidden_submissions_on_user_id"
+  end
 
   create_table "submissions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "title"
@@ -24,7 +56,19 @@ ActiveRecord::Schema.define(version: 2021_01_04_165203) do
     t.uuid "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "is_showhn", default: false
+    t.boolean "is_askhn", default: false
+    t.boolean "is_flagged", default: false
     t.index ["user_id"], name: "index_submissions_on_user_id"
+  end
+
+  create_table "upvoteds", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id", null: false
+    t.string "type"
+    t.uuid "item_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_upvoteds_on_user_id"
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -48,5 +92,11 @@ ActiveRecord::Schema.define(version: 2021_01_04_165203) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
+  add_foreign_key "comments", "submissions"
+  add_foreign_key "comments", "users"
+  add_foreign_key "favorites", "users"
+  add_foreign_key "hidden_submissions", "submissions"
+  add_foreign_key "hidden_submissions", "users"
   add_foreign_key "submissions", "users"
+  add_foreign_key "upvoteds", "users"
 end

@@ -1,0 +1,2 @@
+class FavoriteSubmission < Favorite
+end

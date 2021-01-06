@@ -1,0 +1,2 @@
+class UpvotedComment < Upvoted
+end

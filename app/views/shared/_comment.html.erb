@@ -4,7 +4,7 @@
         <% if user_signed_in? %>
             <% if comment.user.id == current_user.id %>
                 <p class="current-user-item">*</p>
-            <% elsif !current_user.upvoted_comments.include?(comment.id) %>
+            <% elsif !Upvoted.comments(current_user).include?(comment.id) %>
                 <%= link_to vote_path(:id => comment.id, :how => "up", :comment => "t") do %>
                     <box-icon type='solid' color=  'gray' name='up-arrow'></box-icon>
                 <% end %>
@@ -26,12 +26,12 @@
             <%= link_to "#{time_ago_in_words(comment.created_at)} ago", comment_path(:id => comment.id) %> | 
             <%= link_to "parent", comment.parent_comment_id.nil? ? item_path(:id => comment.submission.id) : comment_path(:id => comment.id) %> | 
             <% if request.url.start_with?(item_url) or request.url.start_with?(comment_url) %>
-                <% if user_signed_in? and current_user.upvoted_comments.include?(comment.id) %>
+                <% if user_signed_in? and Upvoted.comments(current_user).include?(comment.id) %>
                     <%= link_to "unvote", vote_path(:id => comment.id, :comment => "t", :how => "un") %> |
                 <% end %>
             <% end %>
             <% if request.url.start_with?(item_url) or request.url.start_with?(comment_url) %>
-                <% if user_signed_in? and current_user.favorite_comments.include?(comment.id) %>
+                <% if user_signed_in? and Favorite.comments(current_user).include?(comment.id) %>
                     <%= link_to "unfavorite", fave_path(:id => comment.id, :comment => "t", :how => "un") %> |
                 <% else %>
                     <%= link_to "favorite", fave_path(:id => comment.id, :comment => "t") %> |

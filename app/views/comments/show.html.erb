@@ -1,0 +1,13 @@
+<%= render "shared/header" %>
+    <%= render partial: "shared/comment", locals: {comment: @comment} %>
+    <div class="comment-form">
+        <%= form_with url: reply_url(:id => @comment.id) do |f| %>
+            <%= f.text_area :content, size: "65x7" %>
+            <%= f.submit "reply" %>
+        <% end %>
+    </div>
+    <% Comment.exists?(parent_comment_id: @comment.id) %>
+        <% Comment.where(parent_comment_id: @comment.id).each do |child_comment| %>
+            <%= render partial: "shared/comment", locals: {comment: child_comment, is_nested: true} %>
+    <% end %>
+<%= render "shared/footer" %>

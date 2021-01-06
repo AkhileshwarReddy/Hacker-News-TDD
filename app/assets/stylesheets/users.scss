@@ -1,3 +1,48 @@
-// Place all the styles related to the users controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: https://sass-lang.com/
+.profile-form {
+    padding: 1rem .2rem;
+}
+
+.profile-form form div {
+    display: grid;
+    grid-template-columns: 7% 93%;
+    margin-top: .5rem;
+}
+
+.profile-form label {
+    font-size: .9rem;
+    color: grey;
+    text-transform: lowercase;
+    padding-left: .2rem;
+}
+
+.profile-form form input {
+    padding: 2px;
+}
+
+.profile-form form input[type="submit"] {
+    width: 80%;
+    font-size: 1rem;
+}
+
+.profile-form form input[type="email"] {
+    width: 40%;
+}
+
+.profile-form a {
+    font-size: .9rem;
+    text-decoration: underline;
+    color: gray;
+}
+
+.profile-form form em {
+    font-size: .85rem;
+    color: gray;
+}
+
+@media (max-width: 768px) {
+    .profile-form form div {
+        display: grid;
+        grid-template-columns: 15% 85%;
+        margin-top: .5rem;
+    }    
+}

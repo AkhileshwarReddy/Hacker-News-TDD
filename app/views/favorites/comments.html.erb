@@ -1,0 +1,7 @@
+<%= render "shared/header" %>
+    <div class="comment-container">
+        <% @comments.each do |comment| %>
+            <%= render partial: "shared/comment", locals:{comment: comment} %>
+        <% end %>
+    </div>
+<%= render "shared/footer" %>

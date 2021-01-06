@@ -1,0 +1,31 @@
+<%= javascript_pack_tag 'search' %>
+<header>
+    <nav>
+        <div class="logo-title">
+            <%= image_tag "logos/hacker-news-30.png", size: "28x28" %>
+            <h1 class="title">Search Hacker News</h1>
+        </div>
+        <div class="search_form">
+            <%= form_with id: "search", method: :get do |f|  %>
+                <%= f.text_field :query, remote: true, placeholder: "Search stories by title, url or author" %>
+                <div id="options">
+                    <%= f.label "Search" %>&nbsp;<%= f.select :type, options_for_select(@types, @type.values.first) %>
+                    <%= f.label "by" %>&nbsp;<%= f.select :sort, options_for_select(@sorts, @sort.values.first) %>
+                    <%= f.label "for" %>&nbsp;<%= f.select :dateRange, options_for_select(@date_ranges, @date_range.values.first) %>
+                </div>
+            <% end %>
+        </div>
+    </nav>
+</header>
+
+<div id="result-container">
+    <% @search_items.each do |item| %>
+        <% if item.class == Submission %>
+        <div class="submission-item">
+          <%= render partial: "shared/submission", locals: {submission: item} %>
+        </div>
+        <% else %>
+            <%= render partial: "shared/comment", locals: {comment: item} %>
+        <% end %>
+    <% end %>
+</div>

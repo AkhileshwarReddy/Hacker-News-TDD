@@ -3,7 +3,7 @@
         <% if user_signed_in? %>
             <% if submission.user.id == current_user.id %>
                 <p class="current-user-item">*</p>
-            <% elsif !current_user.upvoted_submissions.include?(submission.id) %>
+            <% elsif !Upvoted.submissions(current_user).include?(submission.id) %>
                 <%= link_to vote_path(:id => submission.id, :how => "up") do %>
                     <box-icon type='solid' color=  'gray' name='up-arrow'></box-icon>
                 <% end %>
@@ -29,11 +29,11 @@
                 <%= link_to submission.user.username, user_path(:id => submission.user.username) %>
                 <%= link_to "#{time_ago_in_words(submission.created_at)} ago", item_path(:id => submission.id) %> |
 
-                <% if user_signed_in? and current_user.upvoted_submissions.include?(submission.id) %>
+                <% if user_signed_in? and Upvoted.submissions(current_user).include?(submission.id) %>
                     <%= link_to "unvote", vote_path(:id => submission.id) %> |
                 <% end %>
                 
-                <% if user_signed_in? and current_user.hidden_submissions.include?(submission.id) %>
+                <% if user_signed_in? and HiddenSubmission.submission_ids(current_user).include?(submission.id) %>
                     <%= link_to "un-hide", hide_path(:id => submission.id, :how => "un") %> |
                 <% else %>
                     <%= link_to "hide", hide_path(:id => submission.id) %> |
@@ -41,7 +41,7 @@
 
                 <%= link_to "past", "#" %> |
 
-                <% if user_signed_in? and current_user.favorite_submissions.include?(submission.id) %>
+                <% if user_signed_in? and Favorite.submissions(current_user).include?(submission.id) %>
                     <%= link_to "unfavorite", fave_path(:id => submission.id, :how => "un") %> |
                 <% else %>
                     <%= link_to "favourite", fave_path(:id => submission.id) %> |
