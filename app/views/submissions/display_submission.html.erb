@@ -7,7 +7,7 @@
             <p class="submission-text"><%= @submission.text %></p>
         </div>
         <div class="comment-form">
-            <%= form_with model: @comment, url: comment_create_url(:id => @submission.id, :is_comment => false) do |f|  %>
+            <%= form_with model: @comment, url: comment_create_url(:id => @submission.id) do |f|  %>
                 <%= f.text_area :content, size: "65x7" %>
                 <%= f.submit "add comment" %>
             <% end %>
