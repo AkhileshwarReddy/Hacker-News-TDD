@@ -1,9 +1,7 @@
 FactoryBot.define do
   factory :comment do
-    parent_comment_id { "" }
-    content { "MyText" }
+    parent_comment_id { nil }
+    content { Faker::Lorem.paragraph(sentence_count: (1..10)) }
     upvotes { 1 }
-    references { "" }
-    references { "" }
   end
 end

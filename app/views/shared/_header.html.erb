@@ -27,7 +27,7 @@
         <div class="auth-items">
             <ul>
                 <% if current_user %>
-                  <li><%= link_to "#{current_user.username}(#{current_user.karma})", user_path(:id => current_user.username) %>&nbsp;|</li>
+                  <li><%= link_to "#{current_user.username}", user_path(:id => current_user.username) %>(<%= current_user.karma %>)&nbsp;|</li>
                   <li><%= link_to "logout", destroy_user_session_path, method: :delete %></li>
                 <% else %>
                     <li><%= link_to "login", new_user_session_path %>&nbsp;|</li>

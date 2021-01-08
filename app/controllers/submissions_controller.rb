@@ -21,13 +21,13 @@ class SubmissionsController < ApplicationController
         @submission.is_askhn = @submission.title.start_with?("Ask HN:") and (@submission.url.empty? or @submission.url.nil?)
 
         if @submission.save
-        if @comment
-            @comment.submission = @submission
-            @comment.save
-        end
+          if @comment
+              @comment.submission = @submission
+              @comment.save
+          end
             redirect_to :root
         else
-            render "new"
+            redirect_to submit_path
         end
     end
 
@@ -45,10 +45,11 @@ class SubmissionsController < ApplicationController
         @no_such_item = true
       else
         @comment = Comment.new
-        @submission = Submission.find(params[:id])
-        @comments = @submission.comments.where(parent_comment_id: nil)
-        if @submission == nil
+        if !Submission.exists?(id: params[:id])
           @no_such_item = true
+        else
+          @submission = Submission.find(params[:id])
+          @comments = @submission.comments.where(parent_comment_id: nil)
         end
       end
     end
@@ -59,24 +60,22 @@ class SubmissionsController < ApplicationController
       else
         hidden_submission = HiddenSubmission.new(submission: @submission, user: current_user)
         if !hidden_submission.save
-          falsh[:alert] = "Something went wrong"
+          flash[:alert] = "Something went wrong"
         end
       end
-  
-      # if current_user.save
-        redirect_to params[:how] == "un" ? hidden_path : newest_path
-      # end
+
+      redirect_to params[:how] == "un" ? hidden_path : newest_path
     end
     
-    def news
-      @submissions = Submission.where
-    end
+    # def news
+    #   @submissions = Submission.where
+    # end
     
     def hidden
       @no_such_items = false
       @submissions = []
       if HiddenSubmission.where(user: current_user).count > 0
-        @submissions = HiddenSubmission.where(user: current_user).map {|x| x.submission} # Submission.where(id: current_user.hidden_submissions)
+        @submissions = HiddenSubmission.where(user: current_user).map {|x| x.submission}
       else
         @no_such_item = true
       end

@@ -1,8 +1,11 @@
+include CommentsHelper
+
 class Comment < ApplicationRecord
     belongs_to :user
     belongs_to :submission
 
-    validates :content, presence: true  
+    validates :content, presence: true
+    validates :level, presence: true
 
     def self.create_child_comment(content, parent_comment_id, user)
         self.transaction do

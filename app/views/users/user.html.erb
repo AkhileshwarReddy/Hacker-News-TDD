@@ -1,6 +1,8 @@
 <%= render "shared/header" %>
-<div class="profile-form">
+<% if !@user.nil? %>
+    <div class="profile-form">
         <%= form_with model: @user do |f| %>
+            <%= f.hidden_field :username, value: @user.username %>
             <div>
                 <label>user:</label>
                 <p><%= @user.username %></p>
@@ -100,3 +102,4 @@
             <% end %>
         <% end %>
     </div>
+<% end %>

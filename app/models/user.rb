@@ -6,6 +6,8 @@ class User < ApplicationRecord
 
   has_many :submissions, dependent: :destroy
   has_many :comments, dependent: :destroy
+  has_many :favorites, dependent: :destroy
+  has_many :upvoteds, dependent: :destroy
 
   attr_writer :login
   validates :username, presence: true, uniqueness: { case_sensitive: false }
