@@ -1,3 +1,54 @@
 // Place all the styles related to the search controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+nav {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+nav .logo-title {
+    flex-basis: 20%;
+    align-items: center;
+    display: flex;
+    justify-content: space-around;
+}
+
+.title {
+    font-size: 1.2rem;
+}
+
+.search_form {
+    flex-basis: 80%;
+}
+
+#query {
+    padding: .5rem;
+    margin: .2rem;
+    letter-spacing: .05ch;
+    width: 80%;
+}
+
+form select {
+    padding: .3rem;
+}
+
+.submission-item {
+    padding: .1rem .8rem;
+}
+
+#options {
+    margin: .5rem .1rem;
+}
+
+@media (max-width: 768px) {
+    nav {
+        flex-direction: column;
+    }
+
+    #query {
+        padding: .5rem;
+        letter-spacing: .05ch;
+        width: 100%;
+    }
+}

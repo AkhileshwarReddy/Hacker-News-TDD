@@ -44,8 +44,8 @@ RSpec.describe "Comments", type: :request do
     end
 
     describe "#new_comments", type: :feature do
-        let!(:submissions) { create_list(:submission, rand(1..20), user: create(:user)) }
-        let!(:comments) { create_list(:comment, rand(1..50), submission: submissions[rand(0..submissions.length)], user: create(:user)) }
+        let!(:submissions) { create_list(:submission, rand(10..20), user: create(:user)) }
+        let!(:comments) { create_list(:comment, rand(10..50), submission: submissions[rand(0..submissions.length - 1)], user: create(:user)) }
 
         it "should display all the new comments" do
             visit newcomments_path
@@ -58,17 +58,17 @@ RSpec.describe "Comments", type: :request do
 
     describe "#threads", type: :feature do
         let(:user) { create(:user) }
-        let!(:submissions) { create_list(:submission, rand(1..20), user: create(:user)) }
-        let!(:comments) { create_list(:comment, rand(1..10), submission: submissions[rand(0..submissions.length)], user: [user, create(:user)].sample) }
+        let!(:submissions) { create_list(:submission, rand(10..20), user: create(:user)) }
+        let!(:comments) { create_list(:comment, rand(5..10), submission: submissions[rand(0..submissions.length - 1)], user: user) }
 
         it "should display all the threads involved" do
             login_as(user)
             visit threads_path
-            user_comments = comments.select { |comment| comment.user == user }
+            # user_comments = comments.select { |comment| comment.user == user }
+            user_comments = Comment.threads(user)
             user_comments.each do |comment|
                 expect(page).to have_content(comment.content)
             end
         end
-
     end
 end

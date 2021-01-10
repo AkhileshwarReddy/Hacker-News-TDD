@@ -31,25 +31,5 @@ RSpec.describe User, type: :model do
       comments = create_list(:comment, rand(0..30), submission: submissions[rand(0..submissions.length)], user: user)
       expect(comments.count).to eq(user.comments.count)
     end
-
-    pending "should get all the hidden submissions" do
-      
-    end
-
-    pending "should get all the favorite submissions" do
-      
-    end
-
-    pending "should get all the favorite comments" do
-      
-    end
-
-    pending "should get all the upvoted submissions" do
-      
-    end
-
-    pending "should get all the upvoted comments" do
-      
-    end
   end  
 end

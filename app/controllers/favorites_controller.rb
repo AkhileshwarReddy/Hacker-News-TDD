@@ -5,7 +5,8 @@ class FavoritesController < ApplicationController
         @user = User.find(current_user.id)
         @comment == "t" ? set_favorite_comment : set_favorite_submission
         @user.save
-        redirect_to request.referrer
+        # redirect_to request.referrer
+        redirect_to favorites_path(comment: @comment, id: @user.username)
     end
 
     def favorites

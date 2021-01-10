@@ -4,6 +4,7 @@ class VotesController < ApplicationController
 
     def vote
         @comment == "t" ? vote_comment : vote_submission
+        redirect_to upvoted_path(id: @user.username, comment: @comment)
     end
 
     def upvoted
@@ -28,8 +29,6 @@ class VotesController < ApplicationController
                 else
                     UpvotedComment.delete_by(item_id: comment.id, user: @user)
                 end
-
-                redirect_to request.referrer
             end
         end
 
@@ -43,8 +42,6 @@ class VotesController < ApplicationController
                 else
                     UpvotedSubmission.delete_by(item_id: submission.id, user: @user)
                 end
-
-                redirect_to request.referrer
             end
         end
 
